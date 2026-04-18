@@ -108,7 +108,11 @@ export function Character() {
         }}
       />
 
-      <DefinitionCard status={dict.status} entry={dict.status === 'ready' ? dict.entry : null} />
+      <DefinitionCard
+        status={dict.status}
+        entry={dict.status === 'ready' ? dict.entry : null}
+        missingShard={dict.status === 'ready' ? dict.missingShard : false}
+      />
     </div>
   );
 }

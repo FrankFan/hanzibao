@@ -29,5 +29,15 @@
       { "word": "学习", "pinyin": "xuéxí", "meaning": "学知识、练本领" },
       { "word": "练习", "pinyin": "liànxí", "meaning": "反复练来提高" }
     ]
+  },
+  "你": {
+    "traditional": "你",
+    "simplified": "你",
+    "pinyin": "nǐ",
+    "definitions": ["用来称呼对方"],
+    "examples": [
+      { "word": "你好", "pinyin": "nǐ hǎo", "meaning": "问候语" },
+      { "word": "你们", "pinyin": "nǐmen", "meaning": "称呼多个人" }
+    ]
   }
 }

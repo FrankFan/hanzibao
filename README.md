@@ -22,3 +22,16 @@ pnpm preview
 - 示例数据只覆盖少量汉字，用于演示流程
 - 若要覆盖更多汉字：将 CC-CEDICT 预处理为上述分片 JSON，构建后作为静态资源部署即可
 
+## 生成全量词典分片（推荐）
+
+会自动下载 CC-CEDICT 并生成 `public/data/cedict-*.json`：
+
+```bash
+pnpm data:cedict
+```
+
+也可以指定本地 `cedict_ts.u8` 文件：
+
+```bash
+node scripts/build-cedict.mjs --input /path/to/cedict_ts.u8 --outDir public/data
+```

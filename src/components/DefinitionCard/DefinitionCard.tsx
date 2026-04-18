@@ -3,7 +3,9 @@ import type { DictEntry } from '../../types';
 export function DefinitionCard(props: {
   status: 'idle' | 'loading' | 'ready' | 'error';
   entry: DictEntry | null;
+  missingShard?: boolean;
 }) {
+  const missingShard = props.missingShard ?? false;
   const content =
     props.status === 'loading'
       ? '加载中…'
@@ -11,7 +13,9 @@ export function DefinitionCard(props: {
         ? '词典加载失败'
         : props.entry
           ? null
-          : '暂无释义';
+          : missingShard
+            ? '暂无释义（当前仅内置少量示例词典数据）'
+            : '暂无释义';
 
   return (
     <section className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">

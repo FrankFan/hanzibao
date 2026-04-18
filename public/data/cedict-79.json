@@ -1,0 +1,13 @@
+{
+  "高": {
+    "traditional": "高",
+    "simplified": "高",
+    "pinyin": "gāo",
+    "definitions": ["高度大，离地面远", "在程度或水平上高"],
+    "examples": [
+      { "word": "高兴", "pinyin": "gāoxìng", "meaning": "开心" },
+      { "word": "身高", "pinyin": "shēngāo", "meaning": "人的身高" },
+      { "word": "提高", "pinyin": "tígāo", "meaning": "让水平更高" }
+    ]
+  }
+}
