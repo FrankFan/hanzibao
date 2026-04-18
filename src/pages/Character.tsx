@@ -49,6 +49,26 @@ export function Character() {
     setPlaying(false);
   }, [char, setPlaying]);
 
+  useEffect(() => {
+    if (!writer.ready) return;
+    let canceled = false;
+    setPlaying(true);
+    Promise.resolve(writer.resetCharacter(char))
+      .then(() => {
+        if (canceled) return;
+        return writer.animateCharacter();
+      })
+      .finally(() => {
+        if (canceled) return;
+        setPlaying(false);
+      });
+    return () => {
+      canceled = true;
+      void writer.pauseAnimation();
+      setPlaying(false);
+    };
+  }, [char, writer.ready]);
+
   return (
     <div className="space-y-4">
       <section className="rounded-2xl border border-sky-100 bg-white p-4 shadow-sm">
