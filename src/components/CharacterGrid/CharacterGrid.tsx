@@ -14,16 +14,18 @@ export function CharacterGrid(props: {
         backgroundPosition: '0 0, 0 0, 0 0, 0 0',
       }}
     >
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
         <div
           ref={props.containerRef}
-          className="h-full w-full"
+          className="flex h-full w-full items-center justify-center [&>svg]:m-auto [&>svg]:block [&>svg]:max-h-full [&>svg]:max-w-full"
           aria-label={props.ariaLabel}
         />
       </div>
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute left-1/2 top-0 h-full w-px bg-slate-200/60" />
         <div className="absolute top-1/2 left-0 h-px w-full bg-slate-200/60" />
+        <div className="absolute left-1/2 top-1/2 h-px w-[160%] -translate-x-1/2 -translate-y-1/2 rotate-45 bg-slate-200/40" />
+        <div className="absolute left-1/2 top-1/2 h-px w-[160%] -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-slate-200/40" />
         <div className="absolute left-0 top-0 h-px w-full bg-slate-200/60" />
         <div className="absolute left-0 bottom-0 h-px w-full bg-slate-200/60" />
         <div className="absolute left-0 top-0 h-full w-px bg-slate-200/60" />
