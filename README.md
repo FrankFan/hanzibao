@@ -25,6 +25,13 @@ pnpm preview
 
 词典分片与静态资源缓存：已提供 `public/_headers`
 
+## Cloudflare Web Analytics
+
+项目已内置 Cloudflare Web Analytics 的 Beacon 注入（仅生产环境启用）。
+
+- 在 Cloudflare Dashboard → Analytics & Logs → Web Analytics 创建站点，拿到 token
+- 在 Cloudflare Pages 项目设置里新增环境变量：`VITE_CF_WEB_ANALYTICS_TOKEN=<你的token>`
+
 ## Hanzi Writer 数据加速（推荐）
 
 直接请求 `https://cdn.jsdelivr.net/npm/hanzi-writer-data@latest/<字>.json` 在国内可能非常慢。
