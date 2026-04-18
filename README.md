@@ -25,6 +25,15 @@ pnpm preview
 
 词典分片与静态资源缓存：已提供 `public/_headers`
 
+## Hanzi Writer 数据加速（推荐）
+
+直接请求 `https://cdn.jsdelivr.net/npm/hanzi-writer-data@latest/<字>.json` 在国内可能非常慢。
+
+项目已提供 Cloudflare Pages Function：`/hw-data/<字>.json`
+
+- 线上（`import.meta.env.PROD`）会优先从同域 `/hw-data/...` 拉取，并由 Cloudflare 边缘缓存
+- 本地开发仍使用 jsDelivr，避免依赖 Functions 本地模拟
+
 ## 数据说明
 
 - 词典数据：`public/data/cedict-*.json`（按 `Math.floor(codePoint / 500)` 分片）

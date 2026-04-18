@@ -4,6 +4,7 @@ export function DefinitionCard(props: {
   status: 'idle' | 'loading' | 'ready' | 'error';
   entry: DictEntry | null;
   missingShard?: boolean;
+  onRetry?: () => void;
 }) {
   const missingShard = props.missingShard ?? false;
   const content =
@@ -21,6 +22,15 @@ export function DefinitionCard(props: {
     <section className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
       <h2 className="text-base font-semibold">释义</h2>
       {content ? <div className="mt-2 text-sm text-slate-600">{content}</div> : null}
+      {props.status === 'error' && props.onRetry ? (
+        <button
+          type="button"
+          className="mt-3 h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700"
+          onClick={props.onRetry}
+        >
+          重试
+        </button>
+      ) : null}
       {props.entry ? (
         <div className="mt-3 space-y-4">
           <div>

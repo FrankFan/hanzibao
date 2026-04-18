@@ -78,7 +78,13 @@ export function Character() {
         </div>
       </section>
 
-      <PinyinBadge char={char} pinyin={pinyin} />
+      <PinyinBadge
+        char={char}
+        status={dict.status}
+        pinyin={pinyin}
+        missingShard={dict.status === 'ready' ? dict.missingShard : false}
+        onRetry={dict.retry}
+      />
 
       <CharacterGrid containerRef={writer.containerRef} ariaLabel={`汉字 ${char} 笔顺`} />
 
@@ -112,6 +118,7 @@ export function Character() {
         status={dict.status}
         entry={dict.status === 'ready' ? dict.entry : null}
         missingShard={dict.status === 'ready' ? dict.missingShard : false}
+        onRetry={dict.retry}
       />
     </div>
   );

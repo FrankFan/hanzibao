@@ -4,8 +4,8 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import './index.css';
 
+const app = <RouterProvider router={router} />;
+
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  import.meta.env.DEV ? app : <StrictMode>{app}</StrictMode>,
 );

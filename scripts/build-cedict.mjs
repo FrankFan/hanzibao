@@ -76,6 +76,14 @@ function toToneMarks(pinyinNumbered) {
     .join(' ');
 }
 
+function normalizePinyinCase(pinyin) {
+  return pinyin
+    .split(/\s+/g)
+    .filter(Boolean)
+    .map((syl) => syl.replace(/^[A-Z]/, (m) => m.toLowerCase()))
+    .join(' ');
+}
+
 function parseCedictLine(line) {
   if (!line || line.startsWith('#')) return null;
   const m = line.match(/^(\S+)\s+(\S+)\s+\[(.+?)\]\s+\/(.+)\/\s*$/);
@@ -132,6 +140,7 @@ async function loadText({ input }) {
 function buildCharacterIndex(entries, maxExamples) {
   const single = new Map();
   const wordsByChar = new Map();
+  const singleCandidates = new Map();
 
   for (const e of entries) {
     const chars = Array.from(e.simplified);
@@ -147,13 +156,57 @@ function buildCharacterIndex(entries, maxExamples) {
     if (Array.from(e.simplified).length !== 1) continue;
     const c = e.simplified;
     if (!isHanChar(c)) continue;
-    if (single.has(c)) continue;
+    const list = singleCandidates.get(c) ?? [];
+    list.push(e);
+    singleCandidates.set(c, list);
+  }
 
-    const pinyin = toToneMarks(e.pinyin);
-    const definitions = e.definitions.slice(0, 6);
-    const rawWords = (wordsByChar.get(c) ?? []).filter(
-      (w) => Array.from(w.simplified).length >= 2 && Array.from(w.simplified).length <= 4,
-    );
+  const isPureHanWord = (word) => /^\p{Script=Han}+$/u.test(word);
+  const hasBadMarker = (defs, re) => defs.some((d) => re.test(d));
+
+  const scoreSingleCharEntry = (entry) => {
+    const defs = entry.definitions ?? [];
+    let score = 0;
+    score += Math.min(defs.length, 6) * 2;
+
+    if (hasBadMarker(defs, /\bsurname\b/i)) score -= 80;
+    if (hasBadMarker(defs, /\bbound form\b/i)) score -= 40;
+    if (hasBadMarker(defs, /\bvariant\b/i)) score -= 80;
+    if (hasBadMarker(defs, /\bold variant\b/i)) score -= 90;
+    if (hasBadMarker(defs, /\bused in\b/i)) score -= 60;
+    if (hasBadMarker(defs, /\bclassifier\b/i)) score -= 30;
+    if (hasBadMarker(defs, /\bCL:/)) score -= 30;
+
+    const first = String(defs[0] ?? '');
+    if (first.includes('[') || first.includes(']')) score -= 20;
+    if (first.includes('|')) score -= 10;
+
+    return score;
+  };
+
+  for (const [c, candidates] of singleCandidates.entries()) {
+    let best = null;
+    let bestScore = -Infinity;
+    for (const e of candidates) {
+      const s = scoreSingleCharEntry(e);
+      if (s > bestScore) {
+        bestScore = s;
+        best = e;
+      }
+    }
+    if (!best) continue;
+
+    const pinyin = normalizePinyinCase(toToneMarks(best.pinyin));
+    const definitions = (best.definitions ?? []).slice(0, 6);
+
+    const rawWords = (wordsByChar.get(c) ?? [])
+      .filter((w) => {
+        const len = Array.from(w.simplified).length;
+        if (len < 2 || len > 4) return false;
+        if (!isPureHanWord(w.simplified)) return false;
+        return true;
+      })
+      .slice(0, 500);
 
     const seen = new Set();
     const examples = [];
@@ -164,14 +217,14 @@ function buildCharacterIndex(entries, maxExamples) {
       seen.add(word);
       examples.push({
         word,
-        pinyin: toToneMarks(w.pinyin),
+        pinyin: normalizePinyinCase(toToneMarks(w.pinyin)),
         meaning: (w.definitions[0] ?? '').trim(),
       });
     }
 
     single.set(c, {
-      traditional: e.traditional,
-      simplified: e.simplified,
+      traditional: best.traditional,
+      simplified: best.simplified,
       pinyin,
       definitions,
       examples,

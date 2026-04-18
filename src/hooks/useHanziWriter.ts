@@ -13,6 +13,12 @@ export function useHanziWriter(char: string, speed: number) {
   const writerRef = useRef<Writer | null>(null);
   const [ready, setReady] = useState(false);
 
+  const charDataUrl = useCallback((ch: string) => {
+    const encoded = encodeURIComponent(ch);
+    if (import.meta.env.PROD) return `/hw-data/${encoded}.json`;
+    return `https://cdn.jsdelivr.net/npm/hanzi-writer-data@latest/${encoded}.json`;
+  }, []);
+
   useEffect(() => {
     const c = normalizeSingleHanzi(char);
     if (!containerRef.current || !c) {
@@ -39,9 +45,7 @@ export function useHanziWriter(char: string, speed: number) {
           strokeAnimationSpeed: speed,
           delayBetweenStrokes: 250,
           charDataLoader: (ch: string) =>
-            fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@latest/${ch}.json`).then((r) =>
-              r.json(),
-            ),
+            fetch(charDataUrl(ch)).then((r) => r.json()),
         }) as Writer;
 
         writerRef.current = writer;
@@ -58,7 +62,7 @@ export function useHanziWriter(char: string, speed: number) {
       if (containerRef.current) containerRef.current.innerHTML = '';
       writerRef.current = null;
     };
-  }, [char, speed]);
+  }, [char, speed, charDataUrl]);
 
   const animateCharacter = useCallback(() => writerRef.current?.animateCharacter(), []);
   const pauseAnimation = useCallback(() => writerRef.current?.pauseAnimation(), []);

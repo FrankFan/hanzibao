@@ -4,6 +4,9 @@
 /data/cedict-*.json
   Cache-Control: public, max-age=604800, stale-while-revalidate=31536000
 
+/hw-data/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.js
   Cache-Control: public, max-age=604800
 
