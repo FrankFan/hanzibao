@@ -46,6 +46,14 @@ export function Character() {
   const writer = useHanziWriter(char, speed);
 
   useEffect(() => {
+    if (pinyin) {
+      document.title = `${char}（${pinyin}）- 汉字宝`;
+      return;
+    }
+    document.title = `${char} - 汉字宝`;
+  }, [char, pinyin]);
+
+  useEffect(() => {
     setPlaying(false);
   }, [char, setPlaying]);
 

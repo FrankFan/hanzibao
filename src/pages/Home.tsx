@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '../components/SearchBar/SearchBar';
 import { useCharacterStore } from '../stores/characterStore';
@@ -7,6 +8,10 @@ const suggestions = ['汉', '字', '学', '习', '人', '中'];
 export function Home() {
   const navigate = useNavigate();
   const setChar = useCharacterStore((s) => s.setChar);
+
+  useEffect(() => {
+    document.title = '汉字宝 - 汉字笔顺学习工具（田字格动画 / 拼音 / 释义）';
+  }, []);
 
   return (
     <div className="space-y-4">
