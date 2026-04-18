@@ -31,10 +31,11 @@ export function useHanziWriter(char: string, speed: number) {
   }, []);
 
   useEffect(() => {
+    resizeObserverRef.current?.disconnect();
+    resizeObserverRef.current = null;
+
     const c = normalizeSingleHanzi(char);
     if (!containerRef.current || !c) {
-      resizeObserverRef.current?.disconnect();
-      resizeObserverRef.current = null;
       writerRef.current = null;
       setReady(false);
       return;
@@ -63,7 +64,6 @@ export function useHanziWriter(char: string, speed: number) {
         }) as Writer;
 
         writerRef.current = writer;
-        resizeObserverRef.current?.disconnect();
         resizeObserverRef.current = new ResizeObserver(() => {
           const w = writerRef.current;
           if (!w) return;
