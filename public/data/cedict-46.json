@@ -1,0 +1,22 @@
+{
+  "字": {
+    "traditional": "字",
+    "simplified": "字",
+    "pinyin": "zì",
+    "definitions": ["文字", "写出来的符号，用来表示意思和读音"],
+    "examples": [
+      { "word": "汉字", "pinyin": "Hànzì", "meaning": "汉语使用的文字" },
+      { "word": "写字", "pinyin": "xiězì", "meaning": "把字写出来" }
+    ]
+  },
+  "学": {
+    "traditional": "學",
+    "simplified": "学",
+    "pinyin": "xué",
+    "definitions": ["学习", "向别人或书本获得知识"],
+    "examples": [
+      { "word": "学生", "pinyin": "xuéshēng", "meaning": "在学校读书的人" },
+      { "word": "学校", "pinyin": "xuéxiào", "meaning": "学习的地方" }
+    ]
+  }
+}

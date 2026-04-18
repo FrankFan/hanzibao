@@ -1,0 +1,12 @@
+{
+  "汉": {
+    "traditional": "漢",
+    "simplified": "汉",
+    "pinyin": "hàn",
+    "definitions": ["汉族", "汉语相关的", "也常用来指汉字"],
+    "examples": [
+      { "word": "汉字", "pinyin": "Hànzì", "meaning": "汉语使用的文字" },
+      { "word": "汉语", "pinyin": "Hànyǔ", "meaning": "汉族使用的语言" }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "中": {
+    "traditional": "中",
+    "simplified": "中",
+    "pinyin": "zhōng",
+    "definitions": ["在里面", "不偏不倚", "表示中国（常用简称）"],
+    "examples": [
+      { "word": "中国", "pinyin": "Zhōngguó", "meaning": "中国" },
+      { "word": "中间", "pinyin": "zhōngjiān", "meaning": "在两边之间的位置" },
+      { "word": "中心", "pinyin": "zhōngxīn", "meaning": "最中间的位置" }
+    ]
+  },
+  "人": {
+    "traditional": "人",
+    "simplified": "人",
+    "pinyin": "rén",
+    "definitions": ["人类", "一个人"],
+    "examples": [
+      { "word": "大人", "pinyin": "dàrén", "meaning": "成年人" },
+      { "word": "人们", "pinyin": "rénmen", "meaning": "许多人" }
+    ]
+  },
+  "习": {
+    "traditional": "習",
+    "simplified": "习",
+    "pinyin": "xí",
+    "definitions": ["学习", "反复做来变熟练"],
+    "examples": [
+      { "word": "学习", "pinyin": "xuéxí", "meaning": "学知识、练本领" },
+      { "word": "练习", "pinyin": "liànxí", "meaning": "反复练来提高" }
+    ]
+  }
+}
