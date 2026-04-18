@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import zlib from 'node:zlib';
 
 function parseArgs(argv) {
   const args = { _: [] };
@@ -101,11 +102,31 @@ async function ensureDir(p) {
 
 async function loadText({ input }) {
   if (input) return fs.readFile(input, 'utf8');
-  const url =
-    'https://raw.githubusercontent.com/cc-cedict/cc-cedict/master/cedict_ts.u8';
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to download CC-CEDICT: ${res.status}`);
-  return res.text();
+  const sources = [
+    'https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz',
+    'https://raw.githubusercontent.com/rhcarvalho/cedict/master/cedict_ts.u8',
+  ];
+
+  let lastError = null;
+  for (const url of sources) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`.trim());
+
+      if (url.endsWith('.gz')) {
+        const ab = await res.arrayBuffer();
+        const buf = Buffer.from(new Uint8Array(ab));
+        return zlib.gunzipSync(buf).toString('utf8');
+      }
+
+      return res.text();
+    } catch (e) {
+      lastError = e;
+    }
+  }
+
+  const msg = lastError instanceof Error ? lastError.message : String(lastError);
+  throw new Error(`Failed to download CC-CEDICT from all sources. Last error: ${msg}`);
 }
 
 function buildCharacterIndex(entries, maxExamples) {

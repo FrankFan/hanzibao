@@ -16,6 +16,15 @@ pnpm build
 pnpm preview
 ```
 
+## Cloudflare Pages 部署
+
+- Build command: `pnpm build`
+- Build output directory: `dist`
+
+单页应用（React Router）刷新子路由不 404：已提供 `public/_redirects`
+
+词典分片与静态资源缓存：已提供 `public/_headers`
+
 ## 数据说明
 
 - 词典数据：`public/data/cedict-*.json`（按 `Math.floor(codePoint / 500)` 分片）
