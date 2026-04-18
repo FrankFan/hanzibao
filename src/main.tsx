@@ -9,6 +9,12 @@ const app = <RouterProvider router={router} />;
 
 initCfWebAnalytics();
 
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    void navigator.serviceWorker.register('/sw.js');
+  });
+}
+
 createRoot(document.getElementById('root')!).render(
   import.meta.env.DEV ? app : <StrictMode>{app}</StrictMode>,
 );

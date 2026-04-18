@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { InstallBanner } from './components/InstallBanner/InstallBanner';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { useCharacterStore } from './stores/characterStore';
 
@@ -45,6 +46,11 @@ export function App() {
           }
         >
           <Outlet />
+          {location.pathname === '/' ? (
+          <div className="mt-4">
+            <InstallBanner />
+          </div>
+        ) : null}
         </Suspense>
       </main>
     </div>
